@@ -1,0 +1,638 @@
+﻿
+
+@model MozoApp.Areas.User_Profile.Models.Profile_View
+
+@{
+    ViewData["Title"] = "Your Profile";
+    Layout = "~/Areas/User_Profile/Views/Shared/_LayoutBooking.cshtml";
+
+    <script type="text/javascript"><script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+
+
+    <script type="text/javascript">$(document).ready(function () {
+        var items = "<option value='0'>Please select Geo</option>";
+        var items1 = "<option value='0'>Please select Service</option>";
+        $('#GeoId').html(items);
+        $('#ServiceId').html(items1);
+
+    });
+    </script>
+
+
+    <script type="text/javascript">
+    function jsGetService(value)
+    {
+        var url = '@Url.Content("~/")' + "Admin/Price/GetService_list";
+
+    $.getJSON(url, { Service_Type_Id: value }, function(data) {
+
+            var items = "<option value='0'>Please select Sevice</option>";
+        $("#ServiceId").empty();
+        $.each(data, function(i, servicelist) {
+                items += "<option value='" + servicelist.value + "'>" + servicelist.text + "</option>";
+            });
+        $('#ServiceId').html(items);
+});
+};
+
+</script>
+
+<script type="text/javascript">  
+        // Add the following code if you want the name of the file appear on select  
+        $(".custom-file-input").on("change", function () {  
+            var fileName = $(this).val().split("\\").pop();  
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);  
+        });  
+    </script>    
+
+}
+
+
+<section class="page-title-section overlay" data-background="~/images/backgrounds/page-title.jpg">
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="list-inline custom-breadcrumb">
+                    <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">Update your profile</a></li>
+                    <li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
+                </ul>
+                <p class="text-lighten">Update your profile as per your convenient</p>
+            </div>
+        </div>
+    </div>
+</section>
+<form asp-controller="Profile" method="post" enctype="multipart/form-data">
+<section class="section bg-gray">
+ 
+    <div class="container">
+
+        <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input type="submit" class="btn btn-primary" name="Duty_button" asp-for="duty" formaction="Duty_Status">
+                            
+                        </div>
+
+                    </div>
+        <br />
+        <br />
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Personal Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="experience-tab" data-toggle="tab" href="#experience" role="tab" aria-controls="expereince" aria-selected="false">Experience & Edu Details</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="identification-tab" data-toggle="tab" href="#identification" role="tab" aria-controls="contact" aria-selected="false">IDs Details</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" id="Contect-tab" data-toggle="tab" href="#Contect" role="tab" aria-controls="Address" aria-selected="false">Contact Details</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" id="Skills-tab" data-toggle="tab" href="#Skills" role="tab" aria-controls="Skills" aria-selected="false">Skill Details</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" id="Bank_Details-tab" data-toggle="tab" href="#Bank_Details" role="tab" aria-controls="Bank_Details" aria-selected="false">Bank Details</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <br />
+                <br />
+
+
+                <div class="row">
+                     <div class="col-lg-7 mb-4 mb-lg-0">
+                         <label class="control-label"> Profile Date</label>
+                         <input  type="hidden" asp-for="profile_photo"/>
+                         <img src="~/ProfilePhoto/@Model.profile_photo"   
+                         class="rounded-circle"   
+                         height="160" width="160"   
+                         asp-append-version="true" />  
+                         </div>
+                    <br />
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+                        <select asp-for="user_title" class="form-control mb-3">
+                            <option>Please select title</option>
+                            <option value="Mr.">Mr.</option>
+                            <option value="Mrs.">Mrs.</option>
+                            <option value="Ms.">Ms.</option>
+                        </select>
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+                        <input type="text" class="form-control mb-3" placeholder="First name" asp-for="first_name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+                        <input type="text" class="form-control mb-3" placeholder="Last name" asp-for="last_name">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+                        <input type="text" class="form-control mb-3" placeholder="Middle Name" asp-for="middle_name">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+                        <select asp-for="gender" class="form-control mb-3">
+                            <option selected>Please Select Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+                        <select asp-for="religion" class="form-control mb-3">
+                            <option selected>Please select religion</option>
+                            <option>Hindu</option>
+                            <option>Muslim</option>
+                            <option>Sikh</option>
+                            <option>Christians</option>
+                        </select>
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                         <label class="control-label"> Date of Birth</label>
+                        <input type="date" class="form-control mb-3" min="01-01-1960" asp-for="dob">
+
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <select asp-for="maritial_status" class="form-control mb-3">
+                            <option selected>Please select maritial status</option>
+                            <option>Married</option>
+                            <option>Single</option>
+                            <option>Divoced</option>
+                        </select>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <label class="control-label"> Merriage Date</label>
+                        <input type="date" class="form-control mb-3"  min="2012-3-23" placeholder="Merriage Date" asp-for="marriage_date">
+
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <div class="form-group">
+                            <label asp-for="ProfileImage" class="control-label"></label>  
+                            <div class="custom-file">  
+
+                                <input  type="file" asp-for="ProfileImage"/>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <textarea type="text" rows="3" class="form-control mb-3" placeholder="About" asp-for="about"></textarea>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input type="submit" class="btn btn-primary" value="Save" formaction="Personal">
+                            
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="tab-pane fade" id="experience" role="tabpanel" aria-labelledby="experience-tab">
+                <br />
+                <br />
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <br />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+
+                        <select asp-for="experience" class="form-control mb-3">
+                            <option selected>Please select experience</option>
+                            <option>0 - 2 Years</option>
+                            <option>2 - 4 Years</option>
+                            <option>4 - 6 Years</option>
+                            <option>6 - 8 Years</option>
+                            <option>8 - 10 Years</option>
+                            <option> >10 Years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+
+                        <select asp-for="edu_qalif" class="form-control mb-3">
+                            <option selected>Select Eduction</option>
+                            <option>Under Metric</option>
+                            <option>Under Graduate</option>
+                            <option>Graduate</option>
+                            <option>Post Graduate</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+
+                        <select asp-for="certified" class="form-control mb-3">
+                            <option value="false">Ceritified</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input asp-for="certificate_no" id="pac-input" class="form-control mb-3" placeholder="Enter Certificate Number"  />
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input asp-for="cerified_institute" id="pac-input" class="form-control mb-3" placeholder="Enter Certificate Institute" />
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input type="submit" class="btn btn-primary" value="Save" formaction="Experiance">
+                            
+                        </div>
+
+                    </div>
+                </div>
+
+    
+
+
+            <div class="tab-pane fade" id="identification" role="tabpanel" aria-labelledby="identification-tab">
+                <br />
+                <br />
+                
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+
+                        <select asp-for="add_doc_type" class="form-control mb-3">
+                            <option selected>Please select address type document</option>
+                            <option>Aadhar</option>
+                            <option>Telephone Bill</option>
+                            <option>Aawas</option>
+                            <option>Voter ID</option>
+                            <option>Rent Aggrement</option>
+                            <option>Passport</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input asp-for="add_doc_no" id="pac-input" class="form-control mb-3" placeholder="Enter Address Document Number" />
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <div class="form-group">
+                            <input  asp-for="add_doc" type="hidden"/>
+                            <label for="exampleFormControlFile1">Please upload address proff</label>
+                            <input type="file" class="form-control-file" asp-for="add_doc_file" id="exampleFormControlFile1">
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+
+                        <select asp-for="id_doc_type" class="form-control mb-3">
+                            <option selected>Please select ID type document</option>
+                            <option>Aadhar</option>
+                            <option>Telephone Bill</option>
+                            <option>Aawas</option>
+                            <option>Voter ID</option>
+                            <option>Rent Aggrement</option>
+                            <option>Passport</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input  asp-for="id_doc" type="hidden"/>
+                        <input asp-for="id_doc_no" id="pac-input" class="form-control mb-3" placeholder="Enter Id Document Number" />
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">Please upload ID proff</label>
+                            <input type="file" class="form-control-file" asp-for="id_doc_file" id="exampleFormControlFile1">
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input  asp-for="pan_card" type="hidden"/>
+                        <input asp-for="pan_card_no" id="pac-input" class="form-control mb-3" placeholder="Enter PAN Number" />
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">Please upload PAN Card</label>
+                            <input type="file" class="form-control-file" asp-for="pan_card_file" id="exampleFormControlFile1">
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input  asp-for="dl" type="hidden"/>
+                        <input asp-for="dl_no" id="pac-input" class="form-control mb-3" placeholder="Enter DL Number" />
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">Please upload DL </label>
+                            <input type="file" class="form-control-file" asp-for="dl_file" id="exampleFormControlFile1">
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input type="submit" class="btn btn-primary" value="Save" formaction="Iddetails">
+                            
+                        </div>
+
+                    </div>
+            </div>
+
+            <div class="tab-pane fade" id="Contect" role="tabpanel" aria-labelledby="Contect-tab">
+                <br />
+                <br />
+                
+                <div class="btn-group">
+                    <a id="createEditCountryModal" asp-area="Bookings" asp-action="AddAddress" asp-route-provider="ServiceProvider" asp-controller="Booking" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-plus"></i>  Add New Address
+                    </a>
+                </div>
+                <br />
+
+
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" colspan="4">@Html.DisplayFor(modelItem => Model.AddressType)</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.address_id)<br />
+                                @Html.DisplayFor(modelItem => Model.AddLine1)<br />
+                                @Html.DisplayFor(modelItem => Model.AddLine2)<br />
+                                @Html.DisplayFor(modelItem => Model.Area)<br />
+                                @Html.DisplayFor(ModelItem => Model.City) <br />
+
+
+                            </td>
+
+                        </tr>
+                        <tr>
+                </table>
+
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input asp-for="primery_contact_number" id="pac-input" class="form-control mb-3" placeholder="Enter Primery Contact Number" />
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input asp-for="secondry_contact_number" id="pac-input" class="form-control mb-3" placeholder="Enter Secondery Contact Number" />
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input type="submit" class="btn btn-primary" value="Save" formaction="Contact_detail">
+                            
+                        </div>
+
+                    </div>
+            </div>
+
+
+            <div class="tab-pane fade" id="Skills" role="tabpanel" aria-labelledby="Skills-tab">
+                <br />
+                <br />
+
+
+
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+                        <select asp-for="Service_Type_Id" asp-items="@Model.Serive_Type" onchange="jsGetService(this.value)" ; class="form-control mb-3"> <option> Please select Service Type </option> </select>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+                        <select class="form-control mb-3" id="ServiceId" name="ServiceId" asp-for="Service_Id" asp-items="@(new SelectList(string.Empty,"Value", "Text"))"><option> Please select Service </option></select>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input type="submit" class="btn btn-primary" value="Save" formaction="Skills_Details">
+                            
+                        </div>
+
+                    </div>
+
+
+
+            </div>
+
+            <div class="tab-pane fade" id="Bank_Details" role="tabpanel" aria-labelledby="Bank_Details-tab">
+                <br />
+                <br />
+
+                
+
+
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+                        <input type="text" class="form-control mb-3" placeholder="Bank name" asp-for="bank_name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+                        <input type="text" class="form-control mb-3" placeholder="IFSC Code" asp-for="ifsc_code">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+
+                        <input type="text" class="form-control mb-3" placeholder="Account Name" asp-for="account_name">
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input type="text" class="form-control mb-3" placeholder="Account Number" asp-for="account_number">
+
+
+                    </div>
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input type="text" class="form-control mb-3" placeholder="UPI" asp-for="upi_id">
+
+
+
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <input type="submit" class="btn btn-primary" value="Save" formaction="Bank_Details">
+                            
+                        </div>
+
+                    </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+    </form>

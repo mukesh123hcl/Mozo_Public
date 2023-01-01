@@ -1,0 +1,293 @@
+﻿@page
+@model LoginModel
+
+@{ ViewData["Title"] = "Log in"; }
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>@ViewData["Title"] - MozoApp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- ** Plugins Needed for the Project ** -->
+<!-- Bootstrap -->
+<link rel="stylesheet" href="~/plugins/bootstrap/bootstrap.min.css">
+<!-- slick slider -->
+<link rel="stylesheet" href="~/plugins/slick/slick.css">
+<!-- themefy-icon -->
+<link rel="stylesheet" href="~/plugins/themify-icons/themify-icons.css">
+<!-- animation css -->
+<link rel="stylesheet" href="~/plugins/animate/animate.css">
+<!-- aos -->
+<link rel="stylesheet" href="~/plugins/aos/aos.css">
+<!-- venobox popup -->
+<link rel="stylesheet" href="~/plugins/venobox/venobox.css">
+
+<!-- Main Stylesheet -->
+<link href="~/css/style.css" rel="stylesheet">
+
+<!--Favicon-->
+<link rel="shortcut icon" href="~/images/favicon.png" type="image/x-icon">
+<link rel="icon" href="~/images/favicon.png" type="image/x-icon">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFGlHLem72DY8vk2XiariJYNYef5R4jNs&callback=initAutocomplete&libraries=places&v=weekly"
+        defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFGlHLem72DY8vk2XiariJYNYef5R4jNs&callback=initAutocomplete&libraries=places&v=weekly"
+        defer></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">var geocoder;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+    }
+    //Get the latitude and the longitude;
+    function successFunction(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        document.getElementById("lat").value = lat;
+        document.getElementById("lng").value = lng;
+        codeLatLng(lat, lng)
+
+    }
+
+    function errorFunction() {
+        alert("Geocoder failed");
+    }
+
+    function initialize() {
+        geocoder = new google.maps.Geocoder();
+
+
+
+    }
+
+    function codeLatLng(lat, lng) {
+
+        var latlng = new google.maps.LatLng(lat, lng);
+        geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                console.log(results)
+                if (results[1]) {
+                    //formatted address
+                    document.getElementById("Address").value = results[0].formatted_address;
+                    //alert(results[0].formatted_address)
+                    //find country name
+                    for (var i = 0; i < results[0].address_components.length; i++) {
+                        for (var b = 0; b < results[0].address_components[i].types.length; b++) {
+
+                            //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+                            if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+                                //this is the object you are looking for
+                                city = results[0].address_components[i];
+                                
+                                break;
+                            }
+                        }
+                    }
+                    //city data
+                    //alert(city.short_name + " " + city.long_name)
+                    document.getElementById("city").value = city.long_name;
+                    
+
+                } else {
+                    alert("No results found");
+                }
+            } else {
+                alert("Geocoder failed due to: " + status);
+            }
+        });
+    }</script>
+<body onload="initialize()">
+    <input type="hidden" asp-for="Input.lat" id="lat" />
+    <input type="hidden" asp-for="Input.log" id="lng" />
+    <input type="hidden" asp-for="Input.address" id="Address" />
+    <input type="hidden" asp-for="Input.city" id="city" />
+
+
+
+    <section class="page-title-section overlay" data-background="~/images/backgrounds/page-title.jpg">
+
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="list-inline custom-breadcrumb">
+                        <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">Log in to Mojo</a></li>
+                        <li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
+                    </ul>
+                    <p class="text-lighten">Enter the world of mozo and relax</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section bg-gray">
+        <div class="container">
+
+
+
+
+            <section>
+                <form id="account" method="post">
+
+                    <div class="row">
+
+                        <div class="col-lg-12">
+                            <h4>Use a local account to log in.</h4>
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7 mb-4 mb-lg-0">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7 mb-4 mb-lg-0">
+
+                            <input asp-for="Input.Email" class="form-control mb-3" placeholder="Mobile or Email" />
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7 mb-4 mb-lg-0">
+
+                            <input asp-for="Input.Password" class="form-control mb-3" placeholder="Password" />
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7 mb-4 mb-lg-0">
+                            <div class="checkbox">
+                                <label asp-for="Input.RememberMe">
+                                    <input asp-for="Input.RememberMe" />
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7 mb-4 mb-lg-0">
+                            <button type="submit" class="btn btn-primary">Log in</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7 mb-4 mb-lg-0">
+                            <p>
+                                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                            </p>
+                            <p>
+                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                            </p>
+
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+
+
+        </div>
+    </section>
+</body>
+<footer>
+    <div class="footer bg-footer section border-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-sm-8 mb-5 mb-lg-0">
+                    <!-- logo -->
+                    <a class="logo-footer" href="index.html"><img class="img-fluid mb-4" src="images/logo.png" alt="logo"></a>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">23621 15 Mile Rd #C104, Clinton MI, 48035, New York, USA</li>
+                        <li class="mb-2">+1 (2) 345 6789</li>
+                        <li class="mb-2">+1 (2) 345 6789</li>
+                        <li class="mb-2">contact@yourdomain.com</li>
+                    </ul>
+                </div>
+                <!-- company -->
+                <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+                    <h4 class="text-white mb-5">COMPANY</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><a class="text-color" href="about.html">About Us</a></li>
+                        <li class="mb-3"><a class="text-color" href="teacher.html">Our Teacher</a></li>
+                        <li class="mb-3"><a class="text-color" href="contact.html">Contact</a></li>
+                        <li class="mb-3"><a class="text-color" href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <!-- links -->
+                <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+                    <h4 class="text-white mb-5">LINKS</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><a class="text-color" href="courses.html">Courses</a></li>
+                        <li class="mb-3"><a class="text-color" href="event.html">Events</a></li>
+                        <li class="mb-3"><a class="text-color" href="gallary.html">Gallary</a></li>
+                        <li class="mb-3"><a class="text-color" href="faqs.html">FAQs</a></li>
+                    </ul>
+                </div>
+                <!-- support -->
+                <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+                    <h4 class="text-white mb-5">SUPPORT</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><a class="text-color" href="#">Forums</a></li>
+                        <li class="mb-3"><a class="text-color" href="#">Documentation</a></li>
+                        <li class="mb-3"><a class="text-color" href="#">Language</a></li>
+                        <li class="mb-3"><a class="text-color" href="#">Release Status</a></li>
+                    </ul>
+                </div>
+                <!-- support -->
+                <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+                    <h4 class="text-white mb-5">RECOMMEND</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><a class="text-color" href="#">WordPress</a></li>
+                        <li class="mb-3"><a class="text-color" href="#">LearnPress</a></li>
+                        <li class="mb-3"><a class="text-color" href="#">WooCommerce</a></li>
+                        <li class="mb-3"><a class="text-color" href="#">bbPress</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- copyright -->
+    <div class="copyright py-4 bg-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-7 text-sm-left text-center">
+                    <p class="mb-0">
+                        Copyright
+                        <script>var CurrentYear = new Date().getFullYear()
+                            document.write(CurrentYear)</script>
+                        © themefisher
+                    </p>
+                </div>
+                <div class="col-sm-5 text-sm-right text-center">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-facebook text-primary"></i></a></li>
+                        <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-twitter-alt text-primary"></i></a></li>
+                        <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-linkedin text-primary"></i></a></li>
+                        <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-instagram text-primary"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/plugins/jQuery/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="~/plugins/bootstrap/bootstrap.min.js"></script>
+    <!-- slick slider -->
+    <script src="~/plugins/slick/slick.min.js"></script>
+    <!-- aos -->
+    <script src="~/plugins/aos/aos.js"></script>
+    <!-- venobox popup -->
+    <script src="~/plugins/venobox/venobox.min.js"></script>
+    <!-- filter -->
+    <script src="~/plugins/filterizr/jquery.filterizr.min.js"></script>
+    <!-- google map -->
+    <
+    <!-- Main Script -->
+    <script src="js/script.js"></script>
+}

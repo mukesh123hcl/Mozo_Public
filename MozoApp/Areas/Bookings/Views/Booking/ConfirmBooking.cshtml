@@ -1,0 +1,83 @@
+﻿@model MozoApp.Areas.Bookings.Models.BookingConfirmation_View
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{ ViewData["Title"] = "Book Your MoZo";
+    Layout = "~/Areas/Bookings/Views/Shared/_LayoutBooking.cshtml"; }
+<section class="page-title-section overlay" data-background="~/images/backgrounds/page-title.jpg">
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="list-inline custom-breadcrumb">
+                    <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">Book Your Mozo</a></li>
+                    <li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
+                </ul>
+                <p class="text-lighten">Confrim your booking</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section bg-gray">
+    <div class="container">
+
+
+        <section>
+
+            <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+                <div class="card-header">Service Selected</div>
+                <div class="card-body">
+                    <h5 class="card-title">@HttpContextAccessor.HttpContext.Session.GetString("ServiceType_Name")</h5>
+                    <p class="card-text">
+                        @HttpContextAccessor.HttpContext.Session.GetString("ServiceName") <br />
+                        @HttpContextAccessor.HttpContext.Session.GetString("HouseType_Name")
+                    </p>
+                </div>
+            </div>
+        </section>
+        <br />
+        <br />
+        <br />
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" colspan="4">@Html.DisplayFor(modelItem => Model.AddressType)</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+
+
+                    <td>
+
+                        @Html.DisplayFor(modelItem => Model.AddLine1)<br />
+                        @Html.DisplayFor(modelItem => Model.AddLine2)<br />
+                        @Html.DisplayFor(modelItem => Model.Area)<br />
+                        @Html.DisplayFor(ModelItem => Model.City) <br /><br />
+
+
+
+                    </td>
+
+                </tr>
+                <tr>
+        </table>
+        <br />
+        <form asp-area="Bookings" asp-action="ConfirmBooking" asp-controller="Booking" method="post" class="form-horizontal" role="form">
+            <div class="float-right">
+                <h2>Total Price: &#8377;@Html.DisplayFor(modelItem => Model.Total_Price)*</h2>
+
+
+                <button type="submit" class="btn btn-primary">Confirm Booking</button>
+            </div>
+            </form>
+    </div>
+        
+
+</section>
+<br />
+<br />
+<br />

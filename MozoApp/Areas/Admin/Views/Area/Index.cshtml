@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MozoApp.Areas.Admin.Models.AreaView>
+
+@using MozoApp.Models
+@using MozoApp.Code
+@{
+    ViewData["Title"] = "Area Config";
+
+}
+
+<h1>Area Config</h1>
+<div class="top-buffer"></div>
+<div class="panel panel-primary">
+
+    <div class="panel-body">
+        <div class="btn-group">
+            <a id="createEditCountryModal" asp-area="Admin" asp-action="AddArea" asp-controller="Area" class="btn btn-primary">
+                <i class="glyphicon glyphicon-plus"></i>  Add Area
+            </a>
+        </div>
+        <br />
+        <div class="top-buffer"></div>
+        <table class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>ID</th>
+
+                    <th>City Name</th>
+                    <th>Geo Name</th>
+                    <th>Area</th>
+                    <th>Added Date</th>
+                    <th>Modified Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.City_Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Geo_Categaory)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AreaName)</td>
+
+                        <td>@Html.DisplayFor(modelItem => item.AddDateTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ModifiedDatime)</td>
+                        <td>
+                            <a id="editCustomerModal" asp-area="Admin" asp-action="EditArea" asp-controller="Area" asp-route-id="@item.Id"
+                               class="btn btn-info">
+                                <i class="glyphicon glyphicon-pencil"></i>  Edit
+                            </a>
+                            <a id="deleteCustomerModal" asp-action="DeleteArea" asp-area="Admin" asp-controller="Area" asp-route-id="@item.Id" class="btn btn-danger">
+                                <i class="glyphicon glyphicon-trash"></i>  Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
+
+@Html.Partial("_Modal", new BootstrapModel { ID = "modal-action-country", AreaLabeledId = "modal-action-country-label", Size = ModelSize.ModalSize.Medium })
+@section scripts
+{
+    <script src="~/js/country-index.js" asp-append-version="true"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">$(document).ready(function () {
+			$("#btnShowModal").click(function () {
+				$("#loginModal").modal('show');
+			});
+
+			$("#btnHideModal").click(function () {
+				$("#loginModal").modal('hide');
+			});
+		});</script>
+}

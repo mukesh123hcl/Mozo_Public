@@ -1,0 +1,169 @@
+﻿@model MozoApp.Areas.Admin.Models.Geo_Category_View
+@using MozoApp.Models
+
+@{
+	ViewData["Title"] = "Config Geo";
+	<script src="/lib/jquery/dist/jquery.js"></script>
+	<script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+
+
+	<script type="text/javascript">
+	$(document).ready(function () {
+		var items = "<option value='0'>Please select City</option>";
+		$('#ddlCity').html(items);
+		
+	});
+	</script>
+
+	<script type="text/javascript">
+
+		function jsFunction(value) {
+			var url = '@Url.Content("~/")' + "Admin/Geo/GetCityList";
+
+			$.getJSON(url, { CountryId:value }, function (data) {
+
+				var items = '';
+				$("#CityId").empty();
+				$.each(data, function (i, citylist) {
+					items += "<option value='" + citylist.value + "'>" + citylist.text + "</option>";
+				});
+				$('#CityId').html(items);
+			});
+		};
+
+	</script>
+}
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>@ViewData["Title"] - MozoApp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- ** Plugins Needed for the Project ** -->
+<!-- Bootstrap -->
+<link rel="stylesheet" href="~/plugins/bootstrap/bootstrap.min.css">
+<!-- slick slider -->
+<link rel="stylesheet" href="~/plugins/slick/slick.css">
+<!-- themefy-icon -->
+<link rel="stylesheet" href="~/plugins/themify-icons/themify-icons.css">
+<!-- animation css -->
+<link rel="stylesheet" href="~/plugins/animate/animate.css">
+<!-- aos -->
+<link rel="stylesheet" href="~/plugins/aos/aos.css">
+<!-- venobox popup -->
+<link rel="stylesheet" href="~/plugins/venobox/venobox.css">
+
+<!-- Main Stylesheet -->
+<link href="~/css/style.css" rel="stylesheet">
+
+<!--Favicon-->
+<link rel="shortcut icon" href="~/images/favicon.png" type="image/x-icon">
+<link rel="icon" href="~/images/favicon.png" type="image/x-icon">
+
+<section class="page-title-section overlay" data-background="~/images/backgrounds/page-title.jpg">
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<ul class="list-inline custom-breadcrumb">
+					<li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">Config Your Geo Loction</a></li>
+					<li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
+				</ul>
+				<p class="text-lighten">Configure your geo location as per your requrement</p>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="section bg-gray">
+	<div class="container">
+
+
+		<section>
+			<form asp-area="Admin" asp-action="AddGeo" asp-controller="Geo" method="post" class="form-horizontal" role="form">
+
+				<div class="row">
+					<div class="col-lg-7 mb-4 mb-lg-0">
+						<div asp-validation-summary="All" class="text-danger"></div>
+						<br />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-7 mb-4 mb-lg-0">
+
+						<select asp-for="CountryId" asp-items="@Model.Country" id="countrylist" onchange="jsFunction(this.value)" ; class="form-control mb-3"> <option> Please select Country </option> </select>
+
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-7 mb-4 mb-lg-0">
+
+						<select class="form-control mb-3" id="CityId" name="CityId" asp-for="CityId" asp-items="@(new SelectList(string.Empty,"Value", "Text"))"><option> Please select City </option></select>
+
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-7 mb-4 mb-lg-0">
+
+						<input asp-for="Geo_Cateogry" class="form-control mb-3" placeholder="Enter Geo Category" />
+
+					</div>
+				</div>
+
+				
+				<div class="row">
+					<div class="col-lg-7 mb-4 mb-lg-0">
+						<button type="submit" class="btn btn-primary">Save</button>
+						<div class="btn-group">
+							<a asp-area="Admin" asp-action="Index" asp-controller="Geo" class="btn btn-primary">
+								<i class="glyphicon glyphicon-plus"></i>  Back
+							</a>
+						</div>
+					</div>
+				</div>
+
+			</form>
+		</section>
+	</div>
+</section>
+
+<footer>
+
+	<!-- copyright -->
+	<div class="copyright py-4 bg-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-7 text-sm-left text-center">
+					<p class="mb-0">
+						Copyright
+						<script>
+														var CurrentYear = new Date().getFullYear()
+														document.write(CurrentYear)
+						</script>
+						© themefisher
+					</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+@section Scripts {
+
+
+
+
+	//Insert default item "Select" in dropdownlist on load
+
+
+
+
+}
+
+

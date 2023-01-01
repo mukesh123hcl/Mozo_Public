@@ -1,0 +1,107 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model MozoApp.Models.Home
+
+@inject SignInManager<MozoModels.Models.ApplicationUser> SignInManager
+@inject UserManager<MozoModels.Models.ApplicationUser> UserManager
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (p) {
+        var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+        var mapOptions = {
+            center: LatLng,
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+        var marker = new google.maps.Marker({
+            position: LatLng,
+            map: map,
+            document.getElementById("lat").value = p.coords.latitude;
+            document.getElementById("lng").value = p.coords.longitude;
+            title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
+        });
+        google.maps.event.addListener(marker, "click", function (e) {
+            var infoWindow = new google.maps.InfoWindow();
+            infoWindow.setContent(marker.title);
+            infoWindow.open(map, marker);
+        });
+    });
+} else {
+    alert('Geo Location feature is not supported in this browser.');
+}
+    </script>
+
+    <section class="hero-section overlay bg-cover" data-background="images/background.jpg">
+        <div class="container">
+            <div class="hero-slider">
+                <!-- slider item -->
+                <div class="hero-slider-item">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h2 class="text-white" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".1">We care for your HOME</h2>
+                            <p class="text-muted mb-4" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".4">It is all all about give you a smile everytime - We take care your domectic services</p>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                <a class="btn btn-primary" data-animation-out="fadeOutRight" asp-area="Bookings" asp-action="AddBooking" asp-controller="Booking" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".7">Book Now</a> }
+                            else
+                            {
+                <a class="btn btn-primary" data-animation-out="fadeOutRight" id="login" asp-area="Identity" asp-page="/Account/Login" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".7">Book Now</a>}
+                        </div>
+                    </div>
+                </div>
+                <!-- slider item -->
+                <div class="hero-slider-item">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="text-white" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".1">We provide best help for your HOME</h1>
+                            <p class="text-muted mb-4" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".4">Its all about giving you quality services on whenever I Wherever</p>
+                            <a href="contact.html" class="btn btn-primary" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".7">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- slider item -->
+                <div class="hero-slider-item">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="text-white" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">Reliable, Trained & Varifed MoZo</h1>
+                            <p class="text-muted mb-4" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".4">We provide total safe and reliabiltiy</p>
+                            <a href="contact.html" class="btn btn-primary" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="zoomIn" data-delay-in=".7">Book now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slider-item">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="text-white" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">Discover the great benefit of our Skills</h1>
+                            <p class="text-muted mb-4" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".4">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                tempor
+                                incididunt ut labore et
+                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exer
+                            </p>
+                            <a href="contact.html" class="btn btn-primary" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="zoomIn" data-delay-in=".7">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slider-item">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="text-white" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">Keeping your time & money safety</h1>
+                            <p class="text-muted mb-4" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".4">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                tempor
+                                incididunt ut labore et
+                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exer
+                            </p>
+                            <a href="contact.html" class="btn btn-primary" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="zoomIn" data-delay-in=".7">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+

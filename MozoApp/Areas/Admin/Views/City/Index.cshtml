@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MozoApp.Areas.Admin.Models.City_View_Model>
+
+@using MozoApp.Models
+@using MozoApp.Code
+@{
+	ViewData["Title"] = "City Config";
+
+}
+
+<h1>City Config</h1>
+<div class="top-buffer"></div>
+<div class="panel panel-primary">
+
+	<div class="panel-body">
+		<div class="btn-group">
+			<a id="createEditCountryModal"  asp-area="Admin" asp-action="AddCity" asp-controller="City"  class="btn btn-primary">
+				<i class="glyphicon glyphicon-plus"></i>  Add City
+			</a>
+		</div>
+		
+		<div class="top-buffer"></div>
+
+		<table class="table table-bordered table-striped table-condensed">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Country Name</th>
+					<th>City Name</th>
+					<th>Added Date</th>
+					<th>Modified Date</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+				<tr>
+					<td>@Html.DisplayFor(modelItem => item.Id)</td>
+					<td>@Html.DisplayFor(modelItem => item.Country_Name)</td>
+					<td>@Html.DisplayFor(modelItem => item.City_Name)</td>
+					<td>@Html.DisplayFor(modelItem => item.AddDateTime)</td>
+					<td>@Html.DisplayFor(modelItem => item.ModifiedDatime)</td>
+					<td>
+						<a id="editCustomerModal" asp-area="Admin" asp-action="EditCity" asp-controller="City" asp-route-id="@item.Id"
+						   class="btn btn-info">
+							<i class="glyphicon glyphicon-pencil"></i>  Edit
+						</a>
+						<a id="deleteCustomerModal" asp-action="DeleteCity" asp-area="Admin" asp-controller="City" asp-route-id="@item.Id" class="btn btn-danger">
+							<i class="glyphicon glyphicon-trash"></i>  Delete
+						</a>
+					</td>
+				</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+
+
+
+</div>
+
+@Html.Partial("_Modal", new BootstrapModel { ID = "modal-action-country", AreaLabeledId = "modal-action-country-label", Size = ModelSize.ModalSize.Medium })
+@section scripts
+{
+	<script src="~/js/country-index.js" asp-append-version="true"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+	</script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("#btnShowModal").click(function () {
+				$("#loginModal").modal('show');
+			});
+
+			$("#btnHideModal").click(function () {
+				$("#loginModal").modal('hide');
+			});
+		});
+	</script>
+}

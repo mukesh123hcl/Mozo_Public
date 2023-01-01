@@ -1,0 +1,66 @@
+﻿@model IEnumerable<MozoModels.Models.HouseType>
+
+
+@{
+	ViewData["Title"] = "House Type Config";
+
+}
+
+<h1>House Type Config</h1>
+<div class="top-buffer"></div>
+<div class="panel panel-primary">
+
+	<div class="panel-body">
+		<div class="btn-group">
+			<a id="createEditCountryModal" asp-area="Admin" asp-action="AddHousetype" asp-controller="Housetype" class="btn btn-primary">
+				<i class="glyphicon glyphicon-plus"></i>  Add House Type
+			</a>
+		</div>
+
+		<div class="top-buffer"></div>
+		<table class="table table-bordered table-striped table-condensed">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>House Type</th>
+					<th>Added Date</th>
+					<th>Modified Date</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>@Html.DisplayFor(modelItem => item.Id)</td>
+						<td>@Html.DisplayFor(modelItem => item.HouseType_Name)</td>
+						<td>@Html.DisplayFor(modelItem => item.AddDateTime)</td>
+						<td>@Html.DisplayFor(modelItem => item.ModifiedDatime)</td>
+						<td>
+							<a id="editCustomerModal" asp-area="Admin" asp-action="EditHousetype" asp-controller="Housetype" asp-route-id="@item.Id"
+							   class="btn btn-info">
+								<i class="glyphicon glyphicon-pencil"></i>  Edit
+							</a>
+							<a id="deleteCustomerModal" asp-action="DeleteHousetype" asp-area="Admin" asp-controller="Housetype" asp-route-id="@item.Id" class="btn btn-danger">
+								<i class="glyphicon glyphicon-trash"></i>  Delete
+							</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+
+
+
+</div>
+
+@section scripts
+{
+	<script src="~/js/country-index.js" asp-append-version="true"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+	</script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+
+
+}

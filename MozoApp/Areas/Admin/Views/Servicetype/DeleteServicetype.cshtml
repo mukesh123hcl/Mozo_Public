@@ -1,0 +1,175 @@
+﻿@model MozoModels.Models.ServiceTypes
+@using MozoApp.Models
+
+@{
+	ViewData["Title"] = "Delete Service Type";
+}
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>@ViewData["Title"] - MozoApp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- ** Plugins Needed for the Project ** -->
+<!-- Bootstrap -->
+<link rel="stylesheet" href="~/plugins/bootstrap/bootstrap.min.css">
+<!-- slick slider -->
+<link rel="stylesheet" href="~/plugins/slick/slick.css">
+<!-- themefy-icon -->
+<link rel="stylesheet" href="~/plugins/themify-icons/themify-icons.css">
+<!-- animation css -->
+<link rel="stylesheet" href="~/plugins/animate/animate.css">
+<!-- aos -->
+<link rel="stylesheet" href="~/plugins/aos/aos.css">
+<!-- venobox popup -->
+<link rel="stylesheet" href="~/plugins/venobox/venobox.css">
+
+<!-- Main Stylesheet -->
+<link href="~/css/style.css" rel="stylesheet">
+
+<!--Favicon-->
+<link rel="shortcut icon" href="~/images/favicon.png" type="image/x-icon">
+<link rel="icon" href="~/images/favicon.png" type="image/x-icon">
+
+<section class="page-title-section overlay" data-background="~/images/backgrounds/page-title.jpg">
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-7 mb-4 mb-lg-0">
+				<ul class="list-inline custom-breadcrumb">
+					<li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">Config Your Service Type</a></li>
+					<li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
+				</ul>
+
+			</div>
+		</div>
+
+
+	</div>
+</section>
+<section class="section bg-gray">
+	<div class="container">
+
+
+		<section>
+			<form asp-area="Admin" asp-action="DeleteServicetype" asp-controller="Servicetype" role="form">
+
+				<div class="row">
+					<div class="col-lg-7 mb-4 mb-lg-0">
+						<div asp-validation-summary="All" class="text-danger"></div>
+						<br />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-7 mb-4 mb-lg-0">
+
+						<input asp-for="Service_Type_Name" class="form-control mb-3" placeholder="Enter Service Name" readonly />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-7 mb-4 mb-lg-0">
+						<button type="submit" class="btn btn-primary" asp-action="DeleteServicetype" asp-area="Admin" onclick="return confirm('Are you sure you want to delete?')" asp-controller="Servicetype">Delete</button>
+						<div class="btn-group">
+							<a asp-area="Admin" asp-action="Index" asp-controller="Service" class="btn btn-primary">
+								<i class="glyphicon glyphicon-plus"></i>  Back
+							</a>
+						</div>
+					</div>
+				</div>
+
+			</form>
+		</section>
+	</div>
+</section>
+
+<footer>
+
+	<!-- copyright -->
+	<div class="copyright py-4 bg-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-7 text-sm-left text-center">
+					<p class="mb-0">
+						Copyright
+						<script>
+							var CurrentYear = new Date().getFullYear()
+							document.write(CurrentYear)
+						</script>
+						© Mozo
+					</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+	<script src="~/plugins/jQuery/jquery.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="~/plugins/bootstrap/bootstrap.min.js"></script>
+	<!-- slick slider -->
+	<script src="~/plugins/slick/slick.min.js"></script>
+	<!-- aos -->
+	<script src="~/plugins/aos/aos.js"></script>
+	<!-- venobox popup -->
+	<script src="~/plugins/venobox/venobox.min.js"></script>
+	<!-- filter -->
+	<script src="~/plugins/filterizr/jquery.filterizr.min.js"></script>
+	<!-- google map -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFGlHLem72DY8vk2XiariJYNYef5R4jNs"></script>
+	<script src="~/plugins/google-map/gmap.js"></script>
+	<script type="text/javascript">
+		var placeSearch, autocomplete;
+
+		var componentForm = {
+			street_number: 'short_name',
+			route: 'long_name',
+			locality: 'long_name',
+			administrative_area_level_1: 'short_name',
+			country: 'long_name',
+			postal_code: 'short_name'
+		};
+
+		function initAutocomplete() {
+			// Create the autocomplete object, restricting the search predictions to
+			// geographical location types.
+			autocomplete = new google.maps.places.Autocomplete(
+				document.getElementById('autocomplete'), { types: ['geocode'] });
+
+			// Avoid paying for data that you don't need by restricting the set of
+			// place fields that are returned to just the address components.
+			autocomplete.setFields(['address_component']);
+
+			// When the user selects an address from the drop-down, populate the
+			// address fields in the form.
+			autocomplete.addListener('place_changed', fillInAddress);
+		}
+		function geolocate() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function (position) {
+					var geolocation = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+					var circle = new google.maps.Circle(
+						{ center: geolocation, radius: position.coords.accuracy });
+					autocomplete.setBounds(circle.getBounds());
+				});
+			}
+		}
+	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFGlHLem72DY8vk2XiariJYNYef5R4jNs&libraries=places&callback=initAutocomplete"
+			async defer></script>
+
+	<!-- Main Script -->
+	<script src="js/script.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFGlHLem72DY8vk2XiariJYNYef5R4jNs&libraries=places"></script>
+}
+
+

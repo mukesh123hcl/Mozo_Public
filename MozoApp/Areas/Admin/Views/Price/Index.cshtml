@@ -1,0 +1,87 @@
+﻿@model IEnumerable<MozoApp.Areas.Admin.Models.Price_View>
+
+
+@{
+	ViewData["Title"] = "Price Config";
+
+}
+
+<h1>Price Config</h1>
+<div class="top-buffer"></div>
+<div class="panel panel-primary">
+
+	<div class="panel-body">
+		<div class="btn-group">
+			<a id="createEditCountryModal" asp-area="Admin" asp-action="AddPrice" asp-controller="Price" class="btn btn-primary">
+				<i class="glyphicon glyphicon-plus"></i>  Add Price
+			</a>
+		</div>
+		<br />
+		<div class="top-buffer"></div>
+		<table class="table table-bordered table-striped table-condensed">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>City</th>
+					<th>Geo Name</th>
+					<th>Service Type</th>
+
+					<th>Service</th>
+					<th>House Type</th>
+					<th>Avg Time</th>
+					<th>Avg Month Price</th>
+					<th>Gross Margin</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+				<tr>
+					<td>@Html.DisplayFor(modelItem => item.Id)</td>
+					<td>@Html.DisplayFor(modelItem => item.City_Name)</td>
+					<td>@Html.DisplayFor(modelItem => item.Geo_Category_Name)</td>
+					<td>@Html.DisplayFor(modelItem => item.Service_Type_Name)</td>
+					<td>@Html.DisplayFor(modelItem => item.Service_Name)</td>
+					<td>@Html.DisplayFor(modelItem => item.House_Type_Name)</td>
+					<td>@Html.DisplayFor(modelItem => item.Avg_Time)</td>
+					<td>@Html.DisplayFor(modelItem => item.Avg_Per_Month_Price)</td>
+					<td>@Html.DisplayFor(modelItem => item.Gross_Margin)</td>
+					<td>
+						<a id="editCustomerModal" asp-area="Admin" asp-action="EditPrice" asp-controller="Price" asp-route-id="@item.Id"
+						   class="btn btn-info">
+							<i class="glyphicon glyphicon-pencil"></i>  Edit
+						</a>
+						<a id="deleteCustomerModal" asp-action="DeletePrice" asp-area="Admin" asp-controller="Price" asp-route-id="@item.Id" class="btn btn-danger">
+							<i class="glyphicon glyphicon-trash"></i>  Delete
+						</a>
+					</td>
+				</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+
+
+
+</div>
+
+@section scripts
+{
+	<script src="~/js/country-index.js" asp-append-version="true"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+	</script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("#btnShowModal").click(function () {
+				$("#loginModal").modal('show');
+			});
+
+			$("#btnHideModal").click(function () {
+				$("#loginModal").modal('hide');
+			});
+		});
+	</script>
+}

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<MozoApp.Areas.Bookings.Models.BookingConfirmation_View>
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+
+@{ ViewData["Title"] = "Book Your MoZo";
+    Layout = "~/Areas/Bookings/Views/Shared/_LayoutBooking.cshtml"; }
+
+
+<section class="page-title-section overlay" data-background="~/images/backgrounds/page-title.jpg">
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="list-inline custom-breadcrumb">
+                    <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">Book Your Mozo</a></li>
+                    <li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
+                </ul>
+                <p class="text-lighten">Please Select Address</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section bg-gray">
+    <div class="container">
+
+
+        <section>
+            
+                <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Service Selected</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@HttpContextAccessor.HttpContext.Session.GetString("ServiceType_Name")</h5>
+                        <p class="card-text">
+                            @HttpContextAccessor.HttpContext.Session.GetString("ServiceName") <br />
+                            @HttpContextAccessor.HttpContext.Session.GetString("HouseType_Name")
+                        </p>
+                    </div>
+                </div>
+                <br />
+                <div class="btn-group">
+                    <a id="createEditCountryModal" asp-area="Bookings" asp-action="AddAddress" asp-controller="Booking" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-plus"></i>  Add New Address
+                    </a>
+                </div>
+                <br />
+                <br />
+                <br />
+                @foreach (var item in Model)
+                {
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" colspan="4">@Html.DisplayFor(modelItem => item.AddressType)</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        
+                       
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address_id)<br />
+                            @Html.DisplayFor(modelItem => item.AddLine1)<br />
+                            @Html.DisplayFor(modelItem => item.AddLine2)<br />
+                            @Html.DisplayFor(modelItem => item.Area)<br />
+                            @Html.DisplayFor(ModelItem => item.City) <br /><br />
+                            <a id="editCustomerModal" asp-area="Bookings" asp-action="ConfirmBooking" asp-controller="Booking" asp-route-id="@item.Address_id"
+                               class="btn-group">
+                                <i class="glyphicon glyphicon-pencil"></i>  Select Address
+                            </a>
+
+
+                        </td>
+
+                    </tr>
+                    <tr>
+            </table>}
+
+                <br />
+
+                
+            
+        </section>
+    </div>
+</section>
+
+
